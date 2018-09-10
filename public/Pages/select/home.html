@@ -1,0 +1,40 @@
+<div ms-controller="select_home">
+
+    <div class="col-md-12">
+        <br>
+
+        <div class="jumbotron">
+            <h1>选择设备</h1>
+            <hr>
+
+            <div href="javascript:;" class="list-group-item" >
+                <a href="javascript:;" ms-click="edit(null)" class="text-center">添加新设备</a>
+                <p>
+                    <input ms-duplex="name" type="text" class="form-control" placeholder="设备别名">
+                    <input ms-duplex="uid" type="number" class="form-control" placeholder="设备UID">
+                    <input ms-duplex="host" type="text" class="form-control" placeholder="设备物理地址 host">
+                    <button class="btn btn-default btn-block" ms-click="submit">{{btn_name}}</button>
+                </p>
+            </div>
+            <div class="row" ms-include-src="{{loading}}" ms-visible="isLoading"></div>
+            <div  ms-if="list.length > 0">
+                <ul class="list-group">
+                    <li class="list-group-item" ms-repeat="list">
+                        <button class="badge" ms-click="edit($index)">改</button>
+                        <a href="javascript:;" ms-click="change(el.uid)" >
+                            <h2 class="list-group-item-heading">
+                                {{el.name}} - Uid: {{el.uid}} - 物理地址: {{el.host}}
+                            </h2>
+                        </a>
+                   </li>
+                </ul>
+            </div>
+
+
+        </div>
+
+
+    </div>
+</div>
+
+

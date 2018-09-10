@@ -1,0 +1,118 @@
+<div ms-controller="home">
+
+    <!--<div class="col-md-12">-->
+
+    <!--<div class="top_nav">-->
+    <!--<ul class="nav nav-pills">-->
+    <!--<li role="presentation" ms-class-1="active:platform==0"><a href="/#!/play:home">不限</a></li>-->
+    <!--<li role="presentation" ms-class-1="active:platform==1"><a href="/#!/play:home?platform=1">{{1 | platform | html}} 爱奇艺</a></li>-->
+    <!--&lt;!&ndash;<li role="presentation" ms-class-1="active:platform==2"><a href="javascript:;" ms-click="changePlatform(2)">{{2 | platform | html}} 风行</a></li>&ndash;&gt;-->
+    <!--<li role="presentation" ms-class-1="active:platform==3"><a href="/#!/play:home?platform=3">{{3 | platform | html}} 乐视</a></li>-->
+    <!--&lt;!&ndash;<li role="presentation" ms-class-1="active:platform==4"><a href="javascript:;" ms-click="changePlatform(4)">{{4 | platform | html}} 搜狐</a></li>&ndash;&gt;-->
+    <!--&lt;!&ndash;<li role="presentation" ms-class-1="active:platform==5"><a href="javascript:;" ms-click="changePlatform(5)">{{5 | platform | html}} 腾讯</a></li>&ndash;&gt;-->
+    <!--<li role="presentation" ms-class-1="active:platform==6"><a href="/#!/play:home?platform=6">{{6 | platform | html}} 优酷</a></li>-->
+    <!--<li role="presentation" ms-class-1="active:platform==9"><a href="/#!/play:home?platform=9">{{9 | platform | html}} Youtube</a></li>-->
+    <!--&lt;!&ndash;<li class="col-lg-4 navbar-right" style="padding-right: 0;padding-left: 0;">&ndash;&gt;-->
+    <!--&lt;!&ndash;<form class="input-group" ms-submit="submitSearch">&ndash;&gt;-->
+    <!--&lt;!&ndash;<input onmouseenter="$(this).focus()" type="text" class="form-control" placeholder="搜索资源" name="query" ms-attr-value="searchQuery">&ndash;&gt;-->
+    <!--&lt;!&ndash;<span class="input-group-btn">&ndash;&gt;-->
+    <!--&lt;!&ndash;<button type="submit" class="btn btn-default" ><span class="glyphicon glyphicon-search"></span></button>&ndash;&gt;-->
+    <!--&lt;!&ndash;</span>&ndash;&gt;-->
+    <!--&lt;!&ndash;</form>&ndash;&gt;-->
+    <!--&lt;!&ndash;</li>&ndash;&gt;-->
+    <!--</ul>-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <br>
+    <div class="clearfix"></div>
+
+    <!--<div class="pagination-centered text-center" ms-visible="currentPage > 1">-->
+    <!--<br>-->
+    <!--<div class="col-md-12">-->
+    <!--<button ms-click="rePage" type="button" class="btn btn-default btn-sm btn-block">&laquo; 上一页</button>-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <div class="col-md-12" ms-visible="cateList.length > 0">
+
+        <blockquote class="hidden-xs">
+            <span ms-visible="searchQuery"><a class="btn btn-danger " ms-attr-href="/?uid={{uid}}#!/play:home?platform={{platform}}"><span
+                class="glyphicon glyphicon-remove"></span> 搜索包含 "<i
+                class="muted">{{searchQuery}}</i> " 的内容</a> , </span>
+            <span>{{currentPage}} / {{totalPage}} 页，总计: {{total}} 部影片</span>
+        </blockquote>
+
+        <div class="clearfix"></div>
+        <div class="pagination-centered text-center hidden-xs" ms-if="pageHtml">
+            <ul class="pagination pagination-lg">
+                {{pageHtml | html}}
+            </ul>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4 col-md-3 col-lg-2 col-xs-12 col-s-4" ms-repeat="cateList">
+                <a ms-attr-href="#!/play:view?setid={{el._id}}" class="thumbnail" ms-css-background-image="rand_bg(el)"
+                   ms-attr-tabindex="$index" ms-attr-id="FocusMovie{{$index}}">
+                    <div class="caption">
+                        <h4>
+                            <!--{{el.platform | platform | html}}-->
+                            {{el.title}}
+                            <small>
+                                <span class="label label-success" ms-if="el.episode_over == '1'">完</span>
+                            </small>
+                        </h4>
+                        <small>
+                            <span ms-if="el['play_num'] && el['play_num'][_clientInfo['uid']]" class="text-danger">
+                                {{el['play_num'][_clientInfo['uid']]}}
+                            </span>
+                            <span ms-if="!el['play_num'] || !el['play_num'][_clientInfo['uid']]" class="text-danger">下载中
+                            </span>
+                            /{{el.episode}}集
+                            /
+                            {{el.summary}}
+                        </small>
+                    </div>
+                </a>
+            </div>
+
+
+        </div>
+
+        <div class="clearfix"></div>
+        <div class="pagination-centered text-center" ms-if="pageHtml">
+            <ul class="pagination pagination-lg">
+                {{pageHtml | html}}
+            </ul>
+            <div class="help-block">
+                <span>{{currentPage}} / {{totalPage}} 页，总计: {{total}} 部影片</span>
+            </div>
+        </div>
+        <!--<div class="pagination-centered text-center" ms-visible="showNextPage">-->
+        <!--<div class="row">-->
+        <!--<div class="col-md-12">-->
+        <!--<nav aria-label="Page navigation">-->
+        <!--<ul class="pagination">-->
+        <!--<li><a href="#">1</a></li>-->
+        <!--<li><a href="#">2</a></li>-->
+        <!--<li><a href="#">3</a></li>-->
+        <!--<li><a href="#">4</a></li>-->
+        <!--<li><a href="#">5</a></li>-->
+        <!--</ul>-->
+        <!--</nav>-->
+        <!--<button ms-click="nextPage" type="button" class="btn btn-default btn-lg btn-block" tabindex="13">下一页 &raquo;</button>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+    </div>
+
+
+    <div class="col-md-12">
+        <br>
+        <div class="alert alert-danger" role="alert" ms-visible="error === false">没有更多内容了</div>
+
+        <div class="row" ms-include-src="{{loading}}" ms-visible="error == 'loading'"></div>
+    </div>
+</div>
+
+

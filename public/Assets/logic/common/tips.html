@@ -1,0 +1,17 @@
+
+
+<div ms-controller="baseTips" ms-class="{{tipsClass}}" class="alert alert-dismissible baseTips" role="alert" ms-visible="toggle">
+    <div>
+        <div class="modal-header" style="border: none;">
+            <button type="button" class="close" ms-click="doClose($event)" ms-visible="showClose" style="right:0; top:0;"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" ms-if="title">{{title | html}}</h4>
+        </div>
+        <div class="modal-body" ms-if="message" style="padding-top: 0;padding-bottom: 0;">
+            {{message|html}}
+        </div>
+        <div class="modal-footer pull-right">
+            <button class="btn btn-sm" ms-class="{{btnClass}}" ms-click="doOk($event)" ms-visible="okVal" data-loading-text="Loading...">{{okVal}}</button>
+            <button class="btn btn-default btn-sm" ms-click="doCancel($event)" ms-visible="cancelVal">{{cancelVal}}</button>
+        </div>
+    </div>
+</div>

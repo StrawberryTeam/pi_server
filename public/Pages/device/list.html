@@ -1,0 +1,104 @@
+<div ms-controller="device_list">
+
+    <div class="col-md-12">
+        <ul class="nav nav-tabs">
+            <li ms-class="active:deviceId==el.uid" ms-repeat="deviceList">
+                <a ms-attr-href="/dashboard#!/device:list?deviceId={{el.uid}}"
+                   class="dropdown-toggle">{{el.name}}已下载资源</a>
+            </li>
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                    创建
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a ms-attr-href="/dashboard#/device:create_set?deviceId={{deviceId}}"><span
+                        class="glyphicon glyphicon-inbox"></span> 创建影片集</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a ms-attr-href="/dashboard#/device:add_set?deviceId={{deviceId}}"><span
+                        class="glyphicon glyphicon-film"></span> 添加影片集</a></li>
+                </ul>
+            </div>
+            <li class="pull-right">
+                <input type="search" ms-duplex="searchQuery" ms-keydown="event.keyCode==13 && search()"
+                       class="form-control" placeholder="搜索本栏目内容">
+            </li>
+        </ul>
+
+
+        <br>
+        <div class="alert alert-warning" role="alert">
+            仅可操作该设备已下载完成的影片，复制至其他设备，打包影片等进度需在 "任务" 中查看
+        </div>
+
+    </div>
+
+    <div class="col-md-12">
+
+        <div class="alert alert-danger" role="alert" ms-visible="isLoading == false && list == false">没有任何内容</div>
+        <div class="">
+            <div class="row" ms-include-src="{{loading}}" ms-visible="isLoading"></div>
+
+            <div class="media" ms-repeat="list" ms-visible="list.length > 0">
+                <div class="media-left media-middle">
+                    <img ms-attr-src="showImg(el)" class="img-rounded" style="max-height: 200px;max-width: 220px;">
+                </div>
+                <div class="media-body">
+                    <h4 class="list-group-item-heading" ms-attr-title="{{el.title}}">
+                        {{el.platform | platform | html}}
+                        <a ms-attr-href="/dashboard#!/device:video?setid={{el._id}}&deviceId={{deviceId}}">{{el.title}}</a>
+                        <span class="label label-danger" ms-if="el.is_vip == '1'">VIP</span>
+                    </h4>
+                    <p class="list-group-item-text" ms-attr-title="{{el.summary}}">
+                        {{el.summary}}
+                        <span ms-if="el.category" class="label label-info" style="margin-left: 5px;"
+                              ms-repeat-cate="el.category">{{cate}}</span>
+                    </p>
+                    <p class="list-group-item-text">
+                                <span class="label label-warning" style="margin-left: 5px;">
+                                    地区: {{el.area}} / 语言: {{el.lang}}
+                                </span>
+                        <span class="label label-warning" style="margin-left: 5px;" ms-if="el.now_episode">
+                                    {{el.now_episode}}
+                                </span>
+                        <span class="label label-warning" style="margin-left: 5px;" ms-if="el.allplaynum_txt">
+                                    {{el.allplaynum_txt}}
+                                </span>
+                    </p>
+                    <div class="list-group-item-text pull-right">
+                        <ol class="breadcrumb">
+                            <li>
+                                <a href="javascript:;" ms-click="show(el._id)" ms-if="isDeviceIdInHides(el)" title="已隐藏" class="text-danger"><span class="glyphicon glyphicon-eye-close"></span></a>
+                                <a href="javascript:;" ms-click="hide(el._id)" ms-if="!isDeviceIdInHides(el)" title="显示中" class=""><span class="glyphicon glyphicon-eye-open"></span></a>
+                            </li>
+                            <li>
+                                <a class="btn btn-link btn-sm" role="button"
+                                   ms-attr-href="/dashboard#!/device:video?setid={{el._id}}&deviceId={{deviceId}}">{{el.play_num[deviceId]}}集</a>
+                            </li>
+                            <li>
+                                <div class="btn-group" role="group" aria-label="...">
+                                    <span class="input-group" title="排序数字，越大越靠前">
+                                        <span class="input-group-addon">排序</span>
+                                        <input type="number" class="form-control input-sm" ms-attr-value="el['sorts'] && el['sorts'][deviceId] ? el['sorts'][deviceId] : 0" placeholder="排序" style="width: 70px;" ms-blur="changeSort(el._id, this.value)">
+                                    </span>
+                                </div>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <hr>
+            </div>
+
+
+        </div>
+
+        <div class="pagination-centered text-center" ms-if="pageHtml">
+            <ul class="pagination pagination-sm">
+                {{pageHtml | html}}
+            </ul>
+        </div>
+    </div>
+</div>
+
+

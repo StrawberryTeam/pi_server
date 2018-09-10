@@ -1,0 +1,30 @@
+<div ms-controller="baseDialog" style="z-index: 1051;" class="modal fade bs-example-modal-sm" tabindex="-1" aria-hidden="true" id="baseDialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">{{title}}</h4>
+            </div>
+            <div class="modal-body">
+                <p>{{message|html}}</p>
+            </div>
+            <div class="modal-footer">
+                <a ms-attr-href="redirectUrl" class="btn-none" ms-visible="redirectUrl"><span id="dialog-second">3</span> 秒後返回</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ms-visible="showCancel">取消</button>
+                <button type="button" class="btn" ms-class="{{okClass}}" ms-click="doOk($event)" ms-visible="!redirectUrl">{{okVal}}</button>
+            </div>
+        </div>
+    </div>
+    <script>
+//        avalon.vmodels.root.buttonStatus();
+    </script>
+    <script ms-if="redirectUrl">
+        setInterval(function(){
+            var s = $('#dialog-second').text();
+            s--;
+            $('#dialog-second').text(s);
+        }, 1000);
+    </script>
+    <meta http-equiv="refresh" ms-attr-content="2.5;url={{redirectUrl}}" ms-if="redirectUrl">
+
+</div>

@@ -1,0 +1,78 @@
+<div ms-controller="res_list">
+
+    <div class="col-md-12">
+        <ul class="nav nav-tabs">
+            <li ms-class="active:type=='res'">
+                <a href="/dashboard#!/res:list?type=res" class="dropdown-toggle">资源</a>
+            </li>
+            <li ms-class="active:type=='dl'">
+                <a href="/dashboard#!/res:list?type=dl" class="dropdown-toggle">下载中</a>
+            </li>
+            <li ms-class="active:type=='dledAndDlAtlastone'">
+                <a href="/dashboard#!/res:list?type=dledAndDlAtlastone" class="dropdown-toggle">已下载</a>
+            </li>
+            <li class="pull-right">
+                <input type="search" ms-duplex="searchQuery" ms-keydown="event.keyCode==13 && search()" class="form-control" placeholder="搜索本栏目内容">
+            </li>
+        </ul>
+
+        <br>
+        <ul class="nav nav-pills">
+            <li class="pull-right" ms-if="show_query">
+                <a ms-attr-href="/dashboard#!/res:list?type={{type}}&platform={{platform}}" class="text-danger">搜索: {{searchQuery}}&nbsp;&nbsp; <span class="glyphicon glyphicon-remove"></span></a>
+            </li>
+            <li role="presentation" ms-class-1="active:platform==0"><a ms-attr-href="/dashboard#!/res:list?type={{type}}&query={{searchQuery}}">不限</a></li>
+            <li role="presentation" ms-class-1="active:platform==1"><a ms-attr-href="/dashboard#!/res:list?type={{type}}&platform=1&query={{searchQuery}}">{{1 | platform | html}} 爱奇艺</a></li>
+            <!--<li role="presentation" ms-class-1="active:platform==2"><a ms-attr-href="/dashboard#!/res:list?type={{type}}&platform=2">{{2 | platform | html}} 风行</a></li>-->
+            <li role="presentation" ms-class-1="active:platform==3"><a ms-attr-href="/dashboard#!/res:list?type={{type}}&platform=3&query={{searchQuery}}">{{3 | platform | html}} 乐视</a></li>
+            <!--<li role="presentation" ms-class-1="active:platform==4"><a ms-attr-href="/dashboard#!/res:list?type={{type}}&platform=4">{{4 | platform | html}} 搜狐</a></li>-->
+            <!--<li role="presentation" ms-class-1="active:platform==5"><a ms-attr-href="/dashboard#!/res:list?type={{type}}&platform=5">{{5 | platform | html}} 腾讯</a></li>-->
+            <li role="presentation" ms-class-1="active:platform==6"><a ms-attr-href="/dashboard#!/res:list?type={{type}}&platform=6&query={{searchQuery}}">{{6 | platform | html}} 优酷</a></li>
+            <li role="presentation" ms-class-1="active:platform==9"><a ms-attr-href="/dashboard#!/res:list?type={{type}}&platform=9&query={{searchQuery}}">{{9 | platform | html}} Youtube</a></li>
+        </ul>
+    </div>
+
+    <div class="col-md-12">
+        <br>
+
+        <div class="row">
+            <div class="row" ms-include-src="{{loading}}" ms-visible="isLoading"></div>
+            <div class="alert alert-danger" role="alert" ms-visible="isLoading == false && cateList == false">没有任何内容</div>
+
+            <div class="col-sm-6 col-md-2"  ms-repeat="cateList" ms-visible="cateList.length > 0">
+                <div class="thumbnail" >
+                    <img ms-attr-src="showImg(el)" style="height: 180px;">
+                    <div class="caption" style="height: 190px;overflow: hidden;">
+                        <h4 style="height: 18px;overflow:hidden;" ms-attr-title="{{el.title}}">
+                            <span class="label label-danger" ms-if="el.is_vip == '1'">VIP</span>
+                            {{el.title}}</h4>
+                        <p style="height: 20px; overflow:hidden;" ms-attr-title="{{el.now_episode}}">
+                            <span class="label label-success" ms-if="el.episode_over == '1'">完结</span>
+                            {{el.now_episode}}
+                        </p>
+                        <p style="height: 60px; overflow:hidden;" ms-attr-title="{{el.summary}}">
+                            {{el.platform | platform | html}}
+                            {{el.summary}}</p>
+                        <p>
+                            <a ms-if="type == 'res'" href="javascript:;" ms-click="dl(el._id)" class="btn btn-primary btn-xs" role="button" title="加入下载队列"><span class="glyphicon glyphicon-cloud-download"></span></a>
+                            <a ms-if="type == 'dl'" href="javascript:;" ms-click="undl(el._id)" class="btn btn-warning btn-xs" role="button" title="从下载队列中移除"><span class="glyphicon glyphicon-stop"></span></a>
+                            <a ms-if="type == 'dledAndDlAtlastone' && !isInMyUid(el.dl)" href="javascript:;" ms-click="remove(el._id)" class="btn btn-danger btn-xs" role="button" title="删除所有本影片已下载的文件"><span class="glyphicon glyphicon-trash"></span></a>
+                            <a ms-if="isInMyUid(el.dled)" title="已全部下载完成，未完结的会自动下载更新" ms-attr-href="/dashboard#!/res:video?setid={{el._id}}&platform={{el.platform}}" class="btn btn-default btn-xs" role="button">{{el.episode}}集 (已完成)</a>
+                            <a ms-if="!isInMyUid(el.dled) && isInMyUid(el.dl)" title="还在下载中的影片" ms-attr-href="/dashboard#!/res:video?setid={{el._id}}&platform={{el.platform}}" class="btn btn-default btn-xs" role="button">下载中 {{el.play_num[_clientInfo['uid']]}}/{{el.episode}}集</a>
+                            <a ms-if="!isInMyUid(el.dled) && !isInMyUid(el.dl)" title="未全部完成下载，以取消下载，如需继续下载请在资源中查找" ms-attr-href="/dashboard#!/res:video?setid={{el._id}}&platform={{el.platform}}" class="btn btn-default btn-xs" role="button">已下载 {{el.play_num[_clientInfo['uid']]}}/{{el.episode}}集</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="pagination-centered text-center" ms-if="pageHtml">
+            <ul class="pagination pagination-sm">
+                {{pageHtml | html}}
+            </ul>
+        </div>
+    </div>
+</div>
+
+

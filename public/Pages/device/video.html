@@ -1,0 +1,89 @@
+<div ms-controller="device_video">
+
+    <div class="col-md-12">
+        <div id="opt" style="position: fixed;right: 2%;z-index: 999;">
+            <div class="btn-group" role="group">
+                <button class="btn btn-default" disabled>已选 {{selectedVideo.length}} 集</button>
+                <label class="btn btn-default">
+                    <input style="margin: 0;" type="checkbox" ms-click="checkAll()" ms-duplex-checked="selectAll"> 全选本页
+                </label>
+                <button type="button" ms-attr-disabled="!selectedVideo.length > 0"  class="btn btn-default" ms-click="addToSet()" title="添加影片至新影片集, 此操作不会复制影片"> <span class="glyphicon glyphicon-plus"></span> 添加至影片集</button>
+                <!-- Single button -->
+                <div class="btn-group">
+                    <button type="button"  ms-attr-disabled="!selectedVideo.length > 0"  class="btn btn-default  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-copy"></span> 复制至其他设备</button>
+                    <ul class="dropdown-menu">
+                        <li><a class="help-block">影片所在设备 [Uid: {{deviceId}}]</a></li>
+                        <li role="separator" class="divider"></li>
+
+                        <li ms-repeat="deviceList">
+                            <a ms-if="el.uid !== deviceId" href="javascript:;" ms-click="cp2other(el.uid)">[Uid: {{el.uid}}] {{el.name}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <button type="button" ms-attr-disabled="!selectedVideo.length > 0"  class="btn btn-default" ms-click="zipFiles()"><span class="glyphicon glyphicon-floppy-save"></span> 打包已选影片</button>
+            </div>
+        </div>
+
+        <div class="jumbotron">
+            <h1>{{item.title}} <small>共{{total}}集</small></h1>
+            <p>选择项目并开始</p>
+            <div class="btn-group " role="group">
+                <button class="btn btn-default"><span class="glyphicon glyphicon-edit"></span> 编辑影片集</button>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-option-vertical"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a ms-attr-href="/dashboard#/device:add_video?deviceId={{deviceId}}&setId={{setId}}"><span class="glyphicon glyphicon-plus"></span> 添加影片</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="javascript:;"><span class="glyphicon glyphicon-trash"></span> 删除影片集</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="alert alert-danger" role="alert" ms-visible="cateList == false">没有任何内容</div>
+
+        <div class="row"  ms-visible="cateList.length > 0">
+
+
+            <div class="col-md-12">
+            <div class="media" ms-repeat="cateList">
+                <hr>
+                <div class="media-left media-middle">
+                    <img ms-attr-src="showImg(el)" class="img-rounded" style="max-height: 200px;max-width: 220px;">
+                </div>
+                <div class="media-body">
+                    <div class="checkbox">
+                        <h4>
+                            <label>
+                                <input type="checkbox" ms-attr-value="el._id" ms-duplex="selectedVideo" name="checkid" />
+                                {{el.name}}
+                            </label>
+                            <a class="btn btn-danger btn-xs" href=""><span class="
+glyphicon glyphicon-trash"></span> 删除</a>
+                        </h4>
+                    </div>
+                    <p>
+                    {{platform | platform | html}}
+                    <span class="label label-info" ms-if="el.duration">[{{el.duration}}]</span>
+                    <span class="label label-info" ms-if="el.created_at">[{{el.created_at / 1000 | dateFormat('Y/m/d')}}]</span>
+                    {{el.summary}}
+                        <a class="label label-success" ms-attr-href="el.link" target="_blank">[预览]</a>
+                        <a class="label label-info" ms-attr-href="setting['host'] + el['plays'][deviceId]" target="_blank">[在设备 Uid: {{setting['uid']}} 中预览]</a>
+                    </p>
+                    <p>
+                    </p>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <hr>
+        <div class="pagination-centered text-center" ms-if="pageHtml">
+            <ul class="pagination pagination-sm">
+                {{pageHtml | html}}
+            </ul>
+        </div>
+    </div>
+</div>
+
+

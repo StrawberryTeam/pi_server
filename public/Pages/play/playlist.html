@@ -1,0 +1,34 @@
+<div ms-controller="playlist">
+
+
+    <div class="pagination-centered text-center" ms-visible="currentPage > 1">
+        <br>
+        <div class="col-md-12">
+            <button ms-click="rePage" type="button" class="btn btn-default btn-sm btn-block">&laquo; 上一页</button>
+        </div>
+    </div>
+
+    <div class="col-md-12" ms-visible="list.length > 0">
+
+        <div class="list-group">
+            <a href="#" class="list-group-item active">
+                Cras justo odio
+            </a>
+            <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+            <a href="#" class="list-group-item">Morbi leo risus</a>
+            <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+            <a href="#" class="list-group-item">Vestibulum at eros</a>
+        </div>
+
+    </div>
+
+
+    <div class="col-md-12">
+        <br>
+        <div class="alert alert-danger" role="alert" ms-visible="error === false">没有更多内容了</div>
+
+        <div class="row" ms-include-src="{{loading}}" ms-visible="error == 'loading'"></div>
+    </div>
+</div>
+
+

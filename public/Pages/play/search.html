@@ -1,0 +1,129 @@
+<div ms-controller="search">
+
+
+    <style>
+        .bs-glyphicons li{
+            float: left;
+            width: 90px;
+            height: 90px;
+            /*padding: 10px;*/
+            font-size: 10px;
+            line-height: 1.4;
+            text-align: center;
+            padding: 5px;
+            /*background-color: #f9f9f9;*/
+            /*border: 1px solid #999;*/
+        }
+        .bs-glyphicons li button{
+            padding: 10%;
+        }
+        .bs-glyphicons ul {
+            padding-left: 0;
+            list-style: none;
+        }
+        .list-group-item-text{
+            color: #e3e3e3;
+        }
+        .btn-default, .btn-default:hover, .btn-default:active, .btn-default:focus{
+            border-width: 2px !important;
+        }
+    </style>
+
+    <br>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12" style="margin: 0 5px;">
+                <div class="alert alert-info  hidden-xs hidden-sm">使用 首拼(如 btm/zh => z)/全拼(如 batamu) 拼音字母 或 英文字母/数字 快速查找影片，拼音字母与数字/英文不能混输，使用最下方的文字搜索框可精确搜索</div>
+                <ul class="nav nav-pills">
+                    <li role="presentation" ms-class-1="active:type == 'all'"><a href="javascript:;" ms-click="changeType('all')">全部影片</a></li>
+                    <li role="presentation" ms-class-1="active:type == 'dl'"><a href="javascript:;" ms-click="changeType('dl')">已下载影片</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4 bs-glyphicons">
+
+                <h2 class="text-center hidden-xs hidden-sm" style="overflow:hidden;">{{key}}</h2>
+                <ul class="hidden-xs hidden-sm">
+                    <li ms-repeat="keyboards">
+                        <button type="button" class="btn btn-default btn-lg" style="width: 100%;height: 100%;" ms-click="clickKey(el)" ms-attr-id="FocusMovie{{$index}}">{{el}}</button>
+                    </li>
+                </ul>
+
+                <div class="clearfix"></div>
+                <hr>
+                <form class="input-group" ms-submit="searchQuery">
+                    <input type="text" class="form-control" placeholder="输入关键词" ms-duplex="query" onmouseenter="$(this).focus()">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit" ><span class="glyphicon glyphicon-search"></span> 搜索</button>
+                        <button ms-if="query" class="btn btn-default" type="button" ms-click="clearQuery"><span class="glyphicon glyphicon-remove"></span> 清除</button>
+                    </span>
+                </form>
+
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="row" ms-include-src="{{loading}}" ms-visible="error == 'loading'"></div>
+
+                    <div class="row"  ms-visible="error === false">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8 alert alert-danger" role="alert" style="margin-top: 20%;">没有内容，请尝试减少关键字</div>
+                        <div class="col-md-2"></div>
+                    </div>
+
+                    <div class="col-md-4" ms-visible="list1">
+                        <div class="list-group" ms-each="list1">
+                            <a ms-if="!el.setId" ms-attr-href="#!/play:view?setid={{el._id}}" class="list-group-item" ms-css-background-color="rand_bgcolor()">
+                                <h4 class="list-group-item-heading">
+                                    <span class="glyphicon glyphicon-folder-open"></span> {{el.title}}
+                                </h4>
+                                <p class="list-group-item-text">{{el.episode}}集 {{el.category}}</p>
+                            </a>
+                            <a ms-if="el.setId" ms-attr-href="#!/play:view?setid={{el.setId.$oid}}&videoid={{el._id}}" class="list-group-item" ms-css-background-color="rand_bgcolor()">
+                                <h4 class="list-group-item-heading">
+                                    <span class="glyphicon glyphicon-film"></span> {{el.name}}
+                                </h4>
+                                <p class="list-group-item-text">{{el.duration}} {{el.summary}}</p>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4" ms-visible="list2">
+                        <div class="list-group" ms-each="list2">
+                            <a ms-if="!el.setId" ms-attr-href="#!/play:view?setid={{el._id}}" class="list-group-item" ms-css-background-color="rand_bgcolor()">
+                                <h4 class="list-group-item-heading">
+                                    <span class="glyphicon glyphicon-folder-open"></span> {{el.title}}
+                                </h4>
+                                <p class="list-group-item-text">{{el.episode}}集 {{el.category}}</p>
+                            </a>
+                            <a ms-if="el.setId" ms-attr-href="#!/play:view?setid={{el.setId.$oid}}" class="list-group-item" ms-css-background-color="rand_bgcolor()">
+                                <h4 class="list-group-item-heading">
+                                    <span class="glyphicon glyphicon-film"></span> {{el.name}}
+                                </h4>
+                                <p class="list-group-item-text">{{el.duration}} {{el.summary}}</p>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4" ms-visible="list3">
+                        <div class="list-group" ms-each="list3">
+                            <a ms-if="!el.setId" ms-attr-href="#!/play:view?setid={{el._id}}" class="list-group-item" ms-css-background-color="rand_bgcolor()">
+                                <h4 class="list-group-item-heading">
+                                    <span class="glyphicon glyphicon-folder-open"></span> {{el.title}}
+                                </h4>
+                                <p class="list-group-item-text">{{el.episode}}集 {{el.category}}</p>
+                            </a>
+                            <a ms-if="el.setId" ms-attr-href="#!/play:view?setid={{el.setId.$oid}}" class="list-group-item" ms-css-background-color="rand_bgcolor()">
+                                <h4 class="list-group-item-heading">
+                                    <span class="glyphicon glyphicon-film"></span> {{el.name}}
+                                </h4>
+                                <p class="list-group-item-text">{{el.duration}} {{el.summary}}</p>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

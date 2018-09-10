@@ -1,0 +1,60 @@
+<div ms-controller="device_add_set">
+
+    <div class="col-md-12">
+        <div class="jumbotron">
+            <h1>{{title}}</h1>
+            <p>
+                为设备 {{setting.name}} (Uid: {{deviceId}}, Host: {{setting.host}}) 创建新影片集任务，创建完成后会拉取该影片集信息与影片集内所有影片信息，并默认标记为本设备下载
+            </p>
+
+                <div class="form-group">
+                    <label>* 平台</label>
+                    <div class="radio">
+                        <!--<label style="margin-right: 5px;"><input type="radio" value="1" ms-duplex-number="s_platform" name="platform" required>{{1 | platform | html}} 爱奇艺 </label>-->
+                        <!--<label style="margin-right: 5px;"><input type="radio" value="3" ms-duplex-number="s_platform" name="platform" required>{{3 | platform | html}} 乐视 </label>-->
+                        <!--<label style="margin-right: 5px;"><input type="radio" value="6" ms-duplex-number="s_platform" name="platform" required>{{6 | platform | html}} 优酷 </label>-->
+                        <label style="margin-right: 5px;"><input type="radio" value="9" ms-duplex-number="s_platform" name="platform" required>{{9 | platform | html}} Youtube </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="help-block" ms-if="1 == s_platform">
+                        链接示例&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="http://www.iqiyi.com/a_19rrhaw9hl.html#vfrm=2-4-0-1" target="_blank">
+                            {{1 | platform | html}}
+                            http://www.iqiyi.com/a_19rrhaw9hl.html
+                        </a>
+                    </div>
+                    <div class="help-block" ms-if="3 == s_platform">
+                        链接示例&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="http://www.le.com/comic/94075.html" target="_blank">
+                            {{3 | platform | html}}
+                            http://www.le.com/comic/94075.html
+                        </a>
+                    </div>
+                    <div class="help-block" ms-if="6 == s_platform">
+                        链接示例&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="http://list.youku.com/show/id_zcc003400962411de83b1.html?spm=a2h0j.11185381.0.0" target="_blank">
+                            {{6 | platform | html}}
+                            http://list.youku.com/show/id_zcc003400962411de83b1.html
+                        </a>
+                    </div>
+                    <div class="help-block" ms-if="9 == s_platform">
+                        链接示例&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="https://www.youtube.com/playlist?list=PLzAVL_ayaL5TRdMj9aqz9Mt6jcGRXC0vR" target="_blank">
+                            {{9 | platform | html}}
+                            https://www.youtube.com/playlist?list=PLzAVL_ayaL5TRdMj9aqz9Mt6jcGRXC0vR
+                        </a>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="elink">* 影片集链接</label>
+                    <input type="text" class="form-control" id="elink" name="link" ms-duplex="link" required placeholder="影片集链接">
+                </div>
+                <button ms-click="addSet" type="button" class="btn btn-success">添加该任务</button>
+        </div>
+    </div>
+
+</div>
+
+

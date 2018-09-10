@@ -1,0 +1,77 @@
+<div ms-controller="select_set">
+    <div class="modal-header">
+        <h4 class="modal-title">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                aria-hidden="true" ms-click="cancel">&times;</span></button>
+            <a href="javascript:;" data-dismiss="modal"><span
+                                                              class="glyphicon glyphicon-chevron-left"></span>
+                {{title}}
+            </a>
+        </h4>
+    </div>
+
+    <div class="modal-body">
+        <div class="">
+
+            <div class="text-center" id="cloud_container">
+
+                <ul class="nav nav-tabs nav-justified">
+                    <!--<li class="active"><a href="javascript:;">按手动排序</a></li>-->
+                    <!--<li><a href="javascript:;">按发布排序</a></li>-->
+
+                    <div class="help-block"><span ms-if="ac == 1">添加本设备中的影片至其他影片集</span> <a class="text-danger" ms-if="searchQuery" href="javascript:;" ms-click="search(true)"><span class="glyphicon glyphicon-remove"></span> 正在搜索 {{searchQuery}} 的结果</a></div>
+                    <div class="navbar-form navbar-right" style="margin-bottom: 0" role="search">
+                        <div class="form-group has-feedback">
+                            <input type="text" class="form-control" placeholder="搜索内容..." name="query"
+                                   autocomplete="off" ms-keydown="event.keyCode==13 && search()"
+                                   ms-duplex="searchQuery">
+                            <a href="javascript:;" ms-click="search()"><span
+                                class="glyphicon glyphicon-search form-control-feedback"></span></a>
+                        </div>
+                    </div>
+                </ul>
+
+
+                <br>
+
+
+                <div class="">
+
+                    <div class="row" ms-visible="list.length > 0">
+                        <div class="col-xs-6 col-sm-4 col-md-3 cloud" ms-repeat="list">
+                            <div class="thumbnail">
+                                <a ms-attr-href="/dashboard#!/device:video?setid={{el._id}}&deviceId={{args.deviceId}}" target="_blank" ms-attr-title="语言{{el.lang}}, 地区{{el.area}}">
+                                    <img ms-attr-src="showImg(el)" style="height: 140px;overflow-x: auto;">
+                                </a>
+                                <div class="caption">
+                                    <p class="text-center" style="overflow:hidden;height: 40px;">{{el.platform | platform | html}} {{el.title}}</p>
+                                    <p class="help-block">已含有{{el.episode}}集</p>
+                                    <p class="text-center" style="min-height: 22px;">
+                                        <a href="javascript:;" ms-click="addTo(el._id)"
+                                           data-dismiss="modal" class="btn btn-success btn-xs" role="button"
+                                           data-toggle="tooltip" data-placement="bottom" title="将已选择影片添加至本影片集，所有设备都将添加"><span
+                                            class="glyphicon glyphicon-plus"></span> 添加至本影片集</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-danger" role="alert" ms-visible="error === false">没有更多内容了</div>
+
+                    <div class="row" ms-include-src="{{loading}}" ms-visible="error == 'loading'"></div>
+                </div>
+
+                <div class="modal-footer" style="text-align: center">
+                    <a href="javascript:;" ms-click="getList()" class="btn btn-default" ms-visible="error !== false">显示更多
+                        >></a>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+</div>

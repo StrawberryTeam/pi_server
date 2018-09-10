@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html ms-controller="root">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=0">
+    <meta name="version" content="<?= $_Gver?>">
+
+    <title></title>
+
+    <script>
+        var APP_ENV = '<?= APP_ENV?>'; //开发环境打开此项
+
+        var _siteMain = "<?= $availableModules[$_Gset['module_name']];?>";
+        var _availableModules = <?= json_encode($availableModules);?>;
+        var _clientInfo = <?= $_clientInfo; ?>;
+        var _playSetting = <?= $_playSetting; ?>;
+    </script>
+    <script src="/Assets/common.js"></script>
+    <script src="/Assets/vendor/require/require.js" data-main="/Assets/dashboard.js"></script>
+    <link href="/css/bs.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.min.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="shortcut icon" href="/images/fav.ico" type="image/icon" />
+    <style>
+        .label{
+            padding: 0 .4em 0;
+            font-size: 60%;
+        }
+    </style>
+</head>
+<body>
+
+    <div ms-controller="dashboard">
+        <!-- top nav -->
+        <div class="container-fluid">
+            <div class="row">
+                <div ms-include-src="{{top_nav}}" data-include-replace="true" ms-if="top_nav"></div>
+            </div>
+        </div>
+
+        <!-- main -->
+        <div class="container-fluid">
+            <div ms-include-src="{{module}}" data-include-replace="true" data-include-rendered="render"></div>
+        </div>
+    </div>
+
+    <hr>
+    <div class="help-block text-center">Pi Dashboard <?= $_Gver?></div>
+
+    <div ms-include-src="page" data-include-replace="true" ms-if="page"></div>
+    <div ms-include-src="tips" data-include-replace="true" ms-if="tips"></div>
+    <div ms-include-src="window" data-include-replace="true" ms-if="window"></div>
+
+    <style>
+        input[type=date], input[type=time], input[type=datetime-local], input[type=month]{
+            line-height: normal;
+        }
+    </style>
+</body>
+</html>

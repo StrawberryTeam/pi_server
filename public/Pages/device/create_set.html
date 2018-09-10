@@ -1,0 +1,83 @@
+<div ms-controller="device_create_set">
+
+    <div class="col-md-12">
+        <div class="jumbotron">
+            <h1>{{title}}</h1>
+            <p>
+                为设备 {{setting.name}} (Uid: {{deviceId}}, Host: {{setting.host}}) 创建新影片集
+            </p>
+            <form role="form" method="post" action="/videoset/create_set" enctype="multipart/form-data"
+                  id="form_data">
+                <!--<div class="checkbox">-->
+                    <!--<label>-->
+                        <!--<input type="checkbox"> 为所有设备创建本影片集-->
+                    <!--</label>-->
+                <!--</div>-->
+                <div class="form-group">
+                    <label for="etitle">* 影片集名称</label>
+                    <input type="text" class="form-control" id="etitle" name="data[title]" required placeholder="影片集名称">
+                </div>
+                <div class="form-group">
+                    <label for="esummary">影片集介绍</label>
+                    <textarea name="data[summary]" id="esummary" cols="30" rows="5" class="form-control" ></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="ecategory">分类 (多个分类使用 , 分割)</label>
+                    <input type="text" class="form-control" id="ecategory" name="data[category]" placeholder="分类">
+                </div>
+                <div class="form-group">
+                    <label for="eimg">* 影片集封面 (jpg, png, gif)</label>
+                    <input type="file" class="form-control" id="eimg" name="img" required>
+                </div>
+                <div class="form-group">
+                    <label for="earea">影片地区</label>
+                    <input type="text" class="form-control" id="earea" name="data[area]" placeholder="影片地区" value="Unknown">
+                </div>
+                <div class="form-group">
+                    <label for="elang">影片语言</label>
+                    <input type="text" class="form-control" id="elang" name="data[lang]" placeholder="影片语言" value="Default">
+                </div>
+                <input type="hidden" name="deviceId" ms-attr-value="deviceId">
+                <!--<div class="form-group">-->
+                    <!--<label for="eepisode">预计影片集数(x集、x videos)</label>-->
+                    <!--<input type="text" class="form-control" id="eepisode" name="data[now_episode]" placeholder="预计影片集数">-->
+                <!--</div>-->
+                <!--<div class="form-group">-->
+                    <!--<label>平台</label>-->
+                    <!--<div class="radio">-->
+                        <!--<label><input type="radio" name="data[platform]">{{1 | platform | html}} 爱奇艺 </label>-->
+                        <!--<label><input type="radio" name="data[platform]">{{3 | platform | html}} 乐视 </label>-->
+                        <!--<label><input type="radio" name="data[platform]">{{6 | platform | html}} 优酷 </label>-->
+                        <!--<label><input type="radio" name="data[platform]">{{9 | platform | html}} Youtube </label>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="form-group">-->
+                    <!--<label for="elink">* 影片集链接</label>-->
+                    <!--<input type="text" class="form-control" id="elink" name="data[link]" required placeholder="影片集链接">-->
+                    <!--<div class="help-block">-->
+                        <!--链接示例&nbsp;&nbsp;&nbsp;&nbsp;-->
+                        <!--<a href="http://www.iqiyi.com/a_19rrhaw9hl.html#vfrm=2-4-0-1" target="_blank">-->
+                            <!--{{1 | platform | html}}-->
+                        <!--</a>-->
+                        <!--&nbsp;&nbsp;&nbsp;&nbsp;-->
+                        <!--<a href="http://www.le.com/comic/94075.html" target="_blank">-->
+                            <!--{{3 | platform | html}}-->
+                        <!--</a>-->
+                        <!--&nbsp;&nbsp;&nbsp;&nbsp;-->
+                        <!--<a href="http://list.youku.com/show/id_zcc003400962411de83b1.html?spm=a2h0j.11185381.0.0" target="_blank">-->
+                            <!--{{6 | platform | html}}-->
+                        <!--</a>-->
+                        <!--&nbsp;&nbsp;&nbsp;&nbsp;-->
+                        <!--<a href="https://www.youtube.com/playlist?list=PLzAVL_ayaL5TRdMj9aqz9Mt6jcGRXC0vR" target="_blank">-->
+                            <!--{{9 | platform | html}}-->
+                        <!--</a>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <button type="submit" class="btn btn-success">创建</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+

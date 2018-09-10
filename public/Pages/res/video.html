@@ -1,0 +1,64 @@
+<div ms-controller="res_video">
+
+    <div class="col-md-12">
+        <br>
+
+        <div class="jumbotron">
+            <a type="button" class="btn btn-primary" ms-attr-href="/dashboard#!/device:video?setid={{setId}}&deviceId={{_clientInfo['uid']}}">管理本设备(Uid:{{_clientInfo['uid']}}) {{item.title}} 已下载资源</a>
+
+            <!--<div class="alert alert-info" role="alert">-->
+                <!--<a href="#" class="alert-link">设备资源管理</a>-->
+            <!--</div>-->
+            <h1>{{item.title}}</h1>
+            <p>
+                {{item.platform | platform | html}}
+                {{item.now_episode}}
+                <span class="label label-success" ms-if="item.episode_over == '1'">完结</span>
+            </p>
+            <p>
+                {{item.summary}}
+            </p>
+            <div class="navbar-form navbar-right" role="search">
+            <div class="form-group has-feedback">
+                <input type="text" class="form-control" placeholder="在本片中搜索..." name="query"
+                       autocomplete="off" ms-keydown="event.keyCode==13 && search()" ms-duplex="searchQuery">
+                <a href="javascript:;" ms-click="search()"><span
+                    class="glyphicon glyphicon-search form-control-feedback"></span></a>
+            </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+            <div class="media" ms-repeat="cateList">
+                <div class="media-left media-middle">
+                    <img ms-attr-src="showImg(el)">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">
+                        <span class="label label-danger" ms-if="item.is_vip == '1'">VIP</span>
+                        {{el.name}}
+                    </h4>
+                    <p>
+                    {{platform | platform | html}}
+                    <span class="label label-info" ms-if="el.duration">[{{el.duration}}]</span>
+                    <span class="label label-info" ms-if="el.created_at">[{{el.created_at / 1000 | dateFormat('Y/m/d')}}]</span>
+                    {{el.summary}}
+                        <a class="label label-success" ms-attr-href="el.link" target="_blank">[预览]</a>
+                        <a class="label label-info" ms-attr-href="setting['host'] + el['plays'][_clientInfo['uid']]" target="_blank" ms-if="el['plays'][_clientInfo['uid']]">[在设备 Uid: {{_clientInfo['uid']}} 中预览]</a>
+                    </p>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <hr>
+        <div class="pagination-centered text-center" ms-if="pageHtml">
+            <ul class="pagination pagination-sm">
+                {{pageHtml | html}}
+            </ul>
+        </div>
+    </div>
+</div>
+
+

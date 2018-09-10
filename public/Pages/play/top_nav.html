@@ -1,0 +1,18 @@
+<nav class="navbar " role="navigation">
+
+    <div class="container-fluid">
+        <div class="col-md-12">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <div class="navbar-brand" style="margin-bottom: 0;">
+                <a href="javascript:;" onclick="history.back()" class="pull-left back-btn" ms-if="mod == 'view' && _clientInfo['platform'] != PLATFORM_ANDROIDTV"><span class="glyphicon glyphicon-chevron-left"></span> </a>
+                <img alt="Brand" src="/images/top_icon.png" ms-if="mod != 'view'" height="80%">
+                {{title}}
+                <a href="javascript:;" ms-if="mod == 'view' && _clientInfo['platform'] != PLATFORM_ANDROIDTV" ms-click="more" class="pull-right more-btn"><span class="glyphicon glyphicon-option-horizontal"></span></a>
+            </div>
+        </div>
+
+        </div>
+    </div><!-- /.container-fluid -->
+</nav>
+

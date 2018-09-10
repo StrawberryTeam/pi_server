@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html ms-controller="root">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="version" content="<?= $_Gver?>">
+
+    <title>{{_siteName}}</title>
+
+    <script>
+        var APP_ENV = '<?= APP_ENV?>'; //开发环境打开此项
+
+        var _siteMain = "<?= $availableModules[$_Gset['module_name']];?>";
+        var _availableModules = <?= json_encode($availableModules);?>;
+        var _clientInfo = <?= $_clientInfo; ?>;
+        var _playSetting = <?= $_playSetting; ?>;
+        var _siteName = "<?= $_siteName; ?>";
+    </script>
+    <script src="/Assets/common.js"></script>
+    <script src="/Assets/vendor/require/require.js" data-main="/Assets/play.js"></script>
+    <link href="/css/bs.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="shortcut icon" href="/images/fav.ico" type="image/icon" />
+
+
+    <style>
+        .form-control:hover, .form-control:active, .form-control:focus{
+            border: 2px solid rgb(36, 163, 255) !important;
+            /*opacity: 1 !important;*/
+        }
+        .input-group .form-control:first-child, .input-group-addon:first-child, .input-group-btn:first-child>.btn, .input-group-btn:first-child>.btn-group>.btn, .input-group-btn:first-child>.dropdown-toggle, .input-group-btn:last-child>.btn:not(:last-child):not(.dropdown-toggle), .input-group-btn:last-child>.btn-group:not(:last-child)>.btn{
+            border: 2px solid transparent;
+            /*opacity: .5;*/
+        }
+        .form-control{
+            height: 36px;
+        }
+        .label{
+            padding: 0 .4em 0;
+            font-size: 60%;
+        }
+        .thumbnail .caption{
+            color: #ababab;
+        }
+        .nav>li>a{
+            margin: 1px;
+            padding: 5px 10px;
+        }
+        hr{
+            /*border-top: none;*/
+            margin-top: 5px;
+            border-top: 1px dotted lightgrey;
+        }
+        .navbar, hr{
+            border-bottom: 1px solid rgb(82, 178, 226);
+            /*box-shadow: 3px 0px 15px #63b504;*/
+        }
+        .navbar{
+            /*background: linear-gradient(#474747, #292929);*/
+            /*background: #292929;*/
+        }
+        html{
+            background-color: rgb(82, 178, 226);
+        }
+        body{
+            background-color: #a6d0f0;
+            background: linear-gradient(rgb(166, 208, 240), rgb(82, 178, 226));
+            /*background: linear-gradient(#292929,#474747,#323432,#101210);*/
+            /*background-attachment: fixed;*/
+            background-repeat: no-repeat;
+            color: #5b5e6a;
+        }
+        .thumbnail{
+            /*opacity: .7;*/
+            /*background: transparent;*/
+            /*border: none;*/
+            /*border: 2px solid transparent;*/
+            /*border: none;*/
+            background-repeat: no-repeat;
+            background-position: top center;
+            background-size: 100%;
+            border: 0px solid #ffffff;
+            padding: 0;
+            height: 300px;
+            position: relative;
+            transition: unset;
+            border-radius: 10px;
+        }
+        a.thumbnail:hover, a.thumbnail:focus, a.thumbnail.active{
+            border: 6px solid rgb(36, 163, 255) !important;
+            /*opacity: .8;*/
+            text-decoration: none;
+            /*box-shadow: 5px 5px 25px #63b504;*/
+            outline: none !important;
+            border-radius: 10px;
+        }
+        .thumbnail{
+            background-color: #eeeeee;
+        }
+        a:hover, a:focus, a:active, a.thumbnail:hover, a.thumbnail:focus, a.thumbnail.active{
+            /*border: none;*/
+        }
+        .nav-pills>li>a{
+            border: 3px solid transparent;
+            color: #f1f1f1;
+        }
+        /*.nav>li>a:hover, .nav>li>a:focus{*/
+            /*color: #111111;*/
+        /*}*/
+        .nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus, .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus{
+            border: 6px solid transparent;
+            background-color: rgb(36, 163, 255); /* #63b504 */
+            /*color: #111111;*/
+        }
+
+        .pagination-lg>li>a, .pagination-lg>li>span{
+
+            border-radius: 50% !important;
+            background-color: #eee;
+            color: #111111;
+            border: 3px solid transparent;
+        }
+        .pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover{
+            background-color: rgb(36, 163, 255);
+            border: 3px solid rgb(36, 163, 255) !important;
+        }
+        .pagination>li>a:focus, .pagination>li>a:hover, .pagination>li>span:focus, .pagination>li>span:hover{
+            color: #111111 !important;
+            text-decoration: none;
+            background-color: #fff !important;
+            border: 3px solid rgb(36, 163, 255) !important;
+            /*box-shadow: 5px 5px 25px #63b504;*/
+            outline: none !important;
+        }
+        .btn-primary, .btn-success, .btn-info, .btn-warning, .btn-danger, .btn-link{
+            border: 3px solid transparent;
+        }
+        .btn-default{
+            background-color: rgb(36, 163, 255);
+            color: #FFF;
+            border: 3px solid transparent;
+            /*color: #eee;*/
+            /*opacity: .6;*/
+        }
+        .btn-default:hover, .btn-default:active, .btn-default:focus{
+            color: #111111;
+            text-decoration: none;
+            background-color: #eee;
+            border: 3px solid rgb(103, 161, 255) !important;
+            /*box-shadow: 5px 5px 25px #63b504;*/
+            outline: none !important;
+            /*opacity: 1;*/
+        }
+        .caption{
+            max-height: 96px;
+            background: #ffffff;
+            /*opacity: .8;*/
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            overflow: hidden;
+            /*border-radius: 4px;*/
+            border-radius: 5px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+        .caption h4{
+            margin-top: 0;
+            color: #676666;
+        }
+        /*a.thumbnail:hover, */
+        a.thumbnail:active{
+        /*a.thumbnail:focus{*/
+            /*background-color: #63b504 !important;*/
+        }
+        .nav>li>a>img{
+            height: 15px !important;
+        }
+        .link{
+            color: #eee;
+            border: 3px solid transparent;
+        }
+        .link:hover, .link:focus{
+            color: #111;
+            background: #eee;
+        }
+        .page-header{
+            border-color: rgb(36, 163, 255);
+            /*border: none;*/
+        }
+        .nav-tabs.nav-justified>li>a{
+            border: 2px solid transparent;
+            border-bottom: 2px solid rgb(36, 163, 255);
+            color: #5b5b5b;
+        }
+        .nav>li>a:hover, .nav>li>a:focus{
+            background: rgb(36, 163, 255) !important;
+            color: #ffffff;
+        }
+        .nav-tabs.nav-justified>.active>a, .nav-tabs.nav-justified>.active>a:hover, .nav-tabs.nav-justified>.active>a:focus{
+            border: 2px solid transparent;
+        }
+        .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus{
+            color: #eee;
+        }
+        .panel{
+            background: transparent;
+            border: none;
+        }
+        .panel-primary>.panel-heading{
+            background-color: rgb(36, 163, 255);
+            border-color: rgb(36, 163, 255);
+        }
+        .panel-primary{
+            border-color: rgb(36, 163, 255);
+        }
+        .part_videolist{
+            height: auto;
+            color: #f1f1f1;
+        }
+        .part_videolist h1{
+            margin-top: 10px;
+        }
+        .part_videolist:hover, .part_videolist:focus{
+            color: #f1f1f1;
+        }
+
+        .btn-empty{
+            background-color: transparent;
+            border-color: #f1f1f1;
+        }
+        .btn-empty:hover, .btn-empty:focus{
+            background-color: #63b504;
+            border-color: #63b504;
+        }
+        .carousel-inner>.item>img, .carousel-inner>.item>a>img{
+            width: 100%;
+        }
+        .video-min{
+            height: 1px;
+            width: 1px;
+        }
+        .video-playing{
+            /*z-index: 9999;*/
+            /*position: fixed;*/
+            max-width: 100%;
+            min-height: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            left: 0;
+            top: 0;
+        }
+        .modal-dialog{
+            width: 95%;
+            margin: 0 auto;
+        }
+        .modal-open .modal{
+            overflow: hidden;
+        }
+        .modal-content{
+            background: transparent;
+            box-shadow: none;
+            border: 0;
+        }
+        button.close{
+            color: #fff;
+            position: fixed;
+            right: 0;
+            font-size: 40px;
+            opacity: 1;
+        }
+        .modal-body{
+            padding: 2%;
+        }
+        a:focus, a:hover{
+            background-color: transparent !important;
+            /*background-size: 110% !important;*/
+        }
+        .list-group-item{
+            border: none;
+            /*border: 2px solid transparent;*/
+        }
+        a.list-group-item:focus, a.list-group-item:hover, button.list-group-item:focus, button.list-group-item:hover, a.list-group-item, button.list-group-item{
+            /*color: #d4d4d4;*/
+        }
+        a.list-group-item .list-group-item-heading, button.list-group-item .list-group-item-heading{
+            color: #fff;
+        }
+        a.list-group-item:hover, a.list-group-item:focus{
+            color: #fff;
+            background-color: rgb(36, 163, 255) !important;
+        }
+        .list-group-item-text, .list-group-item-heading{
+            height: 20px;
+            overflow: hidden;
+        }
+        .jumbotron{
+            /*background: #707070;*/
+        }
+        .py{
+            /*width: 40px;*/
+            margin-right: 2px;
+        }
+        .jumbotron .py{
+            width: 70px;
+            /*margin-right: 4px;*/
+        }
+        .non-py{
+            width: auto !important;
+            margin-right: 0;
+        }
+        .set-summary span{
+            margin-right: 5px;
+        }
+        .select_video{
+            max-height: 200px;
+            overflow: hidden;
+        }
+
+        .pagination>li{
+            margin: 0 20px;
+            float: left;
+        }
+        .navbar-brand{
+            /*line-height: normal;*/
+            /*height: auto;*/
+            padding: 10px;
+            margin-left: 0 !important;
+            vertical-align: middle;
+            display: table-cell;
+            float: none;
+            font-size: 15px;
+            height: auto;
+            color: #eee;
+        }
+        .navbar{
+            min-height: auto;
+        }
+        .navbar-header{
+            width: 100%;
+            text-align: center;
+            display: table;
+        }
+        .navbar-brand>img{
+            display: inline;
+        }
+        .back-btn, .more-btn{
+            position: absolute;
+            left: 0;
+            color: #fff;
+        }
+        .more-btn{
+            left: auto;
+            right: 0;
+        }
+        .back-btn:hover, .more-btn:hover{
+            color: rgb(36, 163, 255);
+        }
+        ::-webkit-scrollbar{
+            width: 5px;
+            height: 0;
+            background: transparent;
+        }
+        /*滑块*/
+        ::-webkit-scrollbar-thumb {
+            background-color: rgb(90, 146, 255);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #777;
+        }
+        /*滑道*/
+        ::-webkit-scrollbar-track {
+            /*box-shadow: inset 0 0 6px #FFF;*/
+            border-radius: 10px;
+        }
+        .navbar-brand{
+            color: black;
+        }
+        .platform_1 .video-summary{
+            padding: 0;
+            background-color: transparent;
+        }
+        .platform_1 .panel-body{
+            background-color: #eeeeee;
+        }
+        /* xs */
+        @media (max-width: 480px){
+            .view-main{
+                padding: 0;
+            }
+            .panel-body{
+                padding: 0;
+                padding-top: 40px;
+                background-color: #eee;
+            }
+            .video-list > .col-xs-12{
+                padding: 0;
+            }
+            .container .jumbotron, .container-fluid .jumbotron{
+                /*padding-right: 10px;*/
+                /*padding-left: 10px;*/
+            }
+            .thumbnail{
+                height: 320px;
+                /*height: 250px;*/
+            }
+            .select_video{
+                max-height: none;
+            }
+            h4{
+                font-size: 13px;
+            }
+            h4 .py{
+                font-size: 12px;
+            }
+            h1 .py{
+                font-size: 20px;
+            }
+            .py{
+                width: auto;
+                /*width: 30px;*/
+            }
+            .jumbotron .py{
+                /*width: 30px;*/
+                width: auto;
+            }
+            h1 small{
+                font-size: 40%;
+            }
+            h4{
+                font-size: 11px;
+            }
+            h3{
+                font-size: 13px;
+            }
+            h1{
+                font-size: 23px !important;
+            }
+            .nav-tabs.nav-justified>li{
+                width: 90px;
+                float: left;
+                display: block;
+            }
+            .top_nav{
+                width: 100%;
+                overflow-x: auto;
+                overflow-y: hidden;
+            }
+            .nav-tabs.nav-justified, .nav{
+                width: max-content;
+            }
+            .jumbotron p{
+                font-size: 17px;
+            }
+        }
+        /* col-sm */
+        @media (min-width: 481px) and (max-width: 991px) {
+            .view-main{
+                padding: 0;
+            }
+            .col-s-4 {
+                width: 33.33333333%;
+            }
+            .py{
+                width: auto;
+            }
+            .jumbotron .py{
+                width: 5%;
+            }
+            .nav-tabs.nav-justified>li {
+                display: table-cell;
+                width: 1%;
+            }
+            h4{
+                font-size: 11px;
+            }
+            h3{
+                font-size: 13px;
+            }
+            h1{
+                font-size: 23px !important;
+            }
+            .jumbotron p{
+                font-size: 15px;
+            }
+            /*.nav-tabs.nav-justified>li{*/
+                /*width: 90px;*/
+                /*float: left;*/
+                /*display: block;*/
+            /*}*/
+            /*.top_nav{*/
+                /*width: 100%;*/
+                /*overflow-x: auto;*/
+                /*overflow-y: hidden;*/
+            /*}*/
+            /*.nav-tabs.nav-justified, .nav{*/
+                /*width: max-content;*/
+            /*}*/
+        }
+        /* col-md */
+        @media (min-width: 992px) {
+            h4{
+                font-size: 16px;
+            }
+            h1 {
+                font-size: 25px;
+            }
+            .thumbnail{
+                height: 300px;
+            }
+            .jumbotron p{
+                font-size: 17px;
+            }
+        }
+        /* col-lg 1920*1080 */
+        @media (min-width: 1600px) {
+
+            h4{
+                font-size: 18px;
+            }
+            .thumbnail{
+                height: 400px;
+            }
+        }
+        .list-group-item{
+            /*background-color: #555555;*/
+        }
+    </style>
+    <script>
+//        var firstData = <?= $firstData?>;
+    </script>
+</head>
+<body ms-class-1="platform_{{_clientInfo.platform}}">
+
+<div ms-controller="play" class="play_main">
+    <!-- top nav -->
+    <div class="container-fluid">
+        <div class="row">
+            <div ms-include-src="{{top_nav}}" data-include-replace="true" ms-if="top_nav"></div>
+        </div>
+    </div>
+
+    <!-- main -->
+    <div class="container-fluid">
+        <div class="col-md-12" ms-if="mod != 'view' || true == shownav">
+            <div class="top_nav">
+                <ul class="nav nav-tabs  nav-justified">
+                    <li role="presentation" ms-class-1="active:service == 'play' && mod == 'home'"><a
+                        href="#!/play:home" class="focusBtn">本地影片 <span
+                        ms-visible="_clientInfo['platform'] != 0"></span></a></li>
+                    <li role="presentation" ms-class-1="active:service == 'play' && mod == 'playlist'"><a
+                        href="#!/play:playlist" class="focusBtn">播放列表 <span
+                        ms-visible="_clientInfo['platform'] != 0"></span></a></li>
+                    <!--<li role="presentation" ms-class-1="active:service == 'play' && mod == 'library'"><a href="/#!/play:library" class="focusBtn">库 [3]</a></li>-->
+                    <li role="presentation" ms-class-1="active:service == 'play' && mod == 'favorite'"><a
+                        href="#!/play:favorite" class="focusBtn">我的收藏 <span
+                        ms-visible="_clientInfo['platform'] != 0"></span></a></li>
+                    <li role="presentation" ms-class-1="active:service == 'play' && mod == 'history'"><a
+                        href="#!/play:history" class="focusBtn">播放历史 <span
+                        ms-visible="_clientInfo['platform'] != 0"></span></a></li>
+                    <li role="presentation" ms-class-1="active:service == 'play' && mod == 'search'"><a
+                        href="#!/play:search" class="focusBtn">搜索 <span
+                        ms-visible="_clientInfo['platform'] != 0"></span></a></li>
+                    <!--<li role="presentation" ms-class-1="active:service == 'setting' && mod == 'home'"><a href="/#!/setting:home" class="focusBtn">设置 [9]</a></li>-->
+                </ul>
+            </div>
+
+            <div class="clearfix"></div>
+            <br>
+        </div>
+        <div ms-include-src="{{module}}" data-include-replace="true" data-include-rendered="render"></div>
+    </div>
+
+    <hr>
+    <div class="help-block text-center">
+        <div class="btn-group" ms-if="uid">
+            <a tabindex="99" class=" dropdown-toggle btn btn-default btn-xs" style="color: #eee;" href="/#!/play:select">
+                <span class="glyphicon glyphicon-cog"></span>
+                {{host_name}} Uid: {{uid}} 切换设备<span ms-if="_clientInfo.platform == PLATFORM_ANDROIDTV">[0]</span>
+            </a>
+            <a ms-if="_clientInfo.platform == PLATFORM_ANDROIDTV" tabindex="100" class=" dropdown-toggle btn btn-default btn-xs" style="color: #eee;" href="/st">
+                服务状态 <span class="glyphicon glyphicon-list-alt"></span>
+            </a>
+        </div>
+        <br>
+        World Of Cartoon <?= $_Gver?>
+    </div>
+</div>
+
+<div ms-include-src="page" data-include-replace="true" ms-if="page"></div>
+<div ms-include-src="tips" data-include-replace="true" ms-if="tips"></div>
+<div ms-include-src="window" data-include-replace="true" ms-if="window"></div>
+</body>
+</html>

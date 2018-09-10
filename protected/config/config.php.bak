@@ -1,0 +1,83 @@
+<?php
+
+
+return [
+    //数据库设置
+    'db' => [
+        //mysql example
+        'passport' => [
+            'DB_TYPE' => 'mysql',
+            'DB_HOST' => '127.0.0.1',
+            'DB_USER' => 'root',
+            'DB_PWD'  => '',
+            'DB_PREFIX' => 'passport_',
+            'DB_NAME' => 'blackrock_straw_passport',
+            'DB_PORT' => 3306,
+            'DB_CHARSET' => 'UTF8',
+        ],
+
+        //mongo example
+//        'strawmongo' => [
+//            'DB_TYPE' => 'mongo',
+//            'DB_HOST' => '127.0.0.1',
+//            'DB_USER' => '',
+//            'DB_PWD'  => '',
+//            'DB_PREFIX' => 'straw_',
+//            'DB_NAME' => 'blackrock_passport',
+//            'DB_PORT' => 27017
+//        ],
+    ],
+
+    //cache
+    'cache' => [
+        //redis cache example
+        'strawredis' => [
+            'CACHE_TYPE' => 'redis',
+            'CACHE_HOST' => '127.0.0.1',
+            'CACHE_USER' => '',
+            'CACHE_PWD' => '',
+            'CACHE_PREFIX' => 'passport_',
+            'CACHE_PORT' => 6379,
+        ],
+    ],
+
+    //所有api 通信 modules
+    'api_modules' => [
+        //主要
+        'main' => 'www',
+        //账号系统
+        'passport' => 'passport',
+        //后台管理 core
+        'straw' => 'straw',
+    ],
+
+    //模块们使用的协议
+    'module_protocol' => [
+        //主要
+        'main' => 'http',
+        //账号系统
+        'passport' => 'http',
+        //后台管理 core
+        'straw' => 'http',
+    ],
+
+    //常用设置
+    'config' => [
+        //网站域名
+        'site_domain' => 'blackrock.local',
+        //本module
+        'module_name' => 'passport',
+        //主域
+        'site_mainurl' => 'www',
+        //路由方式
+        // PATH_INFO 使用PATH格式Rewrite
+        // default 兼容模式
+        'router' => 'PATH_INFO',
+        //default database
+        'database' => 'passport',
+        //是否启用 cache  false or name
+        'cache' => 'strawredis',
+        //默认缓存时间 5min = 300
+        'cache_expire' => 1,
+    ],
+];

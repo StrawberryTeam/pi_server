@@ -1,0 +1,71 @@
+<div ms-controller="episode">
+
+    <div class="col-md-12">
+
+        <div class="page-header">
+            <h3>
+                {{currentVideoInfo.name}} <small ms-visible="currentVideoInfo.duration">{{currentVideoInfo.duration}}</small> <small> | 已下载 {{total}} / {{setInfo.episode}} 集</small>
+            </h3>
+            <p>{{currentVideoInfo.summary}}</p>
+        </div>
+
+        <div class="row">
+
+            <div class="col-sm-12">
+
+                <div class="row">
+
+
+                    <div class="col-md-2">
+                        <img ms-if="currentVideoInfo.img" ms-attr-src="set_bg(currentVideoInfo, setInfo.platform)" class="img-rounded  hidden-xs hidden-sm" style="max-width: 100%;">
+                    </div>
+                    <div class="col-md-10">
+                        <div class="row" ms-include-src="{{loading}}" ms-visible="error == 'loading'"></div>
+
+                        <div class="row" style="max-width: 100%; overflow-x: auto;">
+                            <div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 text-center" ms-if="rePageHtml && error != 'loading'">
+                                <a href="javascript:;" ms-click="rePage" ms-focus="rePage" type="button" class="thumbnail part_videolist" tabindex="1">
+                                    <h5><span class="glyphicon glyphicon-triangle-left"></span></h5>
+                                </a>
+                            </div>
+                            <div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 text-center" ms-repeat="videoList">
+                                <a href="javascript:;" ms-click="play($index)" class="thumbnail part_videolist" ms-class-1="FocusPlay:(getVideoNum($index) == num) || $index == 0" ms-attr-tabindex="$index + 1" ms-focus="setCurrentVideo($index)" ms-mouseenter="setCurrentVideo($index)">
+                                    <h5>{{getVideoNum($index)}}</h5>
+                                </a>
+                            </div>
+                            <div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 text-center" ms-if="nextPageHtml && error != 'loading'">
+                                <a href="javascript:;" ms-click="nextPage" ms-focus="nextPage" class="thumbnail part_videolist" >
+                                    <h5><span class="glyphicon glyphicon-triangle-right"></span></h5>
+                                </a>
+                            </div>
+                        </div>
+
+
+                        <div class="alert alert-danger" role="alert" ms-visible="error === false">没有更多内容了</div>
+
+
+                        <hr style="margin-top: 0">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <ul class="nav nav-pills">
+                                    <li role="presentation" ms-class-1="active:cycle == 'ALL'"><a href="javascript:;" ms-click="saveSetting('ALL')">全部循环</a></li>
+                                    <li role="presentation" ms-class-1="active:cycle == 'SINGER'"><a href="javascript:;" ms-click="saveSetting('SINGER')">单集循环</a></li>
+                                    <!--<li role="presentation" ms-class-1="active:cycle == 'RAND'"><a href="javascript:;" ms-click="saveSetting('RAND')">随机播放</a></li>-->
+                                    <li role="presentation" ms-class-1="active:cycle == 'ONCE'"><a href="javascript:;" ms-click="saveSetting('ONCE')">单次播放</a></li>
+                                    <!--<li><span class="glyphicon glyphicon-option-vertical"></span></li>-->
+                                    <!--<li role="presentation" ms-class-1="active:platform==0"><a href="javascript:;" ms-click="changePlatform(0)">跳过片头片尾</a></li>-->
+                                    <!--<li><span class="glyphicon glyphicon-option-vertical"></span></li>-->
+                                    <!--<li role="presentation" ms-class-1="active:platform==0"><a href="javascript:;" ms-click="changePlatform(0)">30分钟后关闭</a></li>-->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+

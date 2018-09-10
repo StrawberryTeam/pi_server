@@ -1,0 +1,414 @@
+<div ms-controller="view">
+
+    <div class="col-md-12 view-main">
+        <style>
+
+            .thumbnail {
+                border: 0px solid #fffc83;
+                background-color: #fffc83;
+                height: 230px;
+                /*border-radius: 23px;*/
+                background-position: center;
+                background-size: auto 100%;
+                margin-bottom: 10px;
+            }
+
+            .caption {
+                background: #fffc83;
+                border-radius: 5px;
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+                max-height: 48px;
+            }
+
+            .caption h4, .thumbnail .caption {
+                color: #795548;
+            }
+
+            a.thumbnail:hover, a.thumbnail:focus, a.thumbnail.active {
+                border: 6px solid rgb(36, 163, 255) !important;
+                border-radius: 10px;
+            }
+
+            blockquote {
+                color: #888888;
+            }
+
+            .panel-body{
+                background-color: #dde7edc2;
+            }
+            .player {
+                max-height: 700px;
+                border: 8px solid rgb(82, 178, 226);
+                background: rgb(82, 178, 226);
+                padding: 5px;
+                border-radius: 20px;
+            }
+
+            .player-main {
+                /*float: none;*/
+                display: table-cell;
+                vertical-align: middle;
+                padding-left: 0;
+                /*padding: 0;*/
+            }
+
+            .video-summary {
+                display: table-cell;
+                vertical-align: middle;
+                background-color: #eee;
+                border-radius: 6px;
+                /*width: auto;*/
+            }
+
+            .video-main {
+                height: 700px;
+                /*display: table;*/
+            }
+
+            .platform_1 .player-main, .platform_2 .player-main {
+                display: none !important;
+            }
+
+            .platform_1 .video-summary, .platform_2 .video-summary {
+                width: 100%;
+                max-height: none;
+                height: auto;
+                overflow-y: auto;
+            }
+
+            .player video{
+                border-radius: 20px;
+                background-size: 100% 100%;
+            }
+
+            .summary-img img{
+                max-width: 100%;
+                border-radius: 20px;
+                border: 5px solid rgb(82, 178, 226);
+                margin: 12px;
+                margin-left: 0;
+            }
+            /* xs */
+            @media (max-width: 480px) {
+                /*.platform_1 .video-summary .video-list .col-xs-12{*/
+                /*!* = col-xs-6 *!*/
+                /*width: 50%;*/
+                /*}*/
+                .thumbnail{
+                    height: 150px;
+                }
+
+                .player-main, .view-phone{
+                    padding: 0;
+                }
+                blockquote {
+                    font-size: 11px;
+                }
+                .player{
+                    border: 0;
+                }
+            }
+
+            /* col-sm */
+            @media (min-width: 481px) and (max-width: 991px) {
+
+                .platform_2 .video-summary .video-list .col-s-12, .platform_1 .video-summary .video-list .col-s-12 {
+                    /* = col-s-4 */
+                    width: 33.33333333%;
+                    padding-right: 15px;
+                    padding-left: 15px;
+                }
+
+                blockquote {
+                    font-size: 17px;
+                }
+                /*blockquote {*/
+                    /*font-size: 13px;*/
+                /*}*/
+
+                .col-s-12 {
+                    width: 100%;
+                    padding: 0;
+                }
+
+                .col-s-4 {
+                    width: 33.33333333%;
+                }
+
+                .col-s-6 {
+                    width: 66.66666667%;
+                }
+
+                .player-main {
+                    /*padding: 0;*/
+                }
+
+                .video-summary {
+                    max-height: 300px;
+                    height: 300px;
+                    overflow-y: auto;
+                    overflow-x: hidden;
+                }
+
+                .thumbnail {
+                    height: 150px;
+                }
+
+                .caption {
+                    max-height: 35px;
+                }
+
+                .page-header {
+                    margin: 20px 0 20px;
+                }
+            }
+
+            /* col-md */
+            @media (min-width: 992px) {
+                .video-summary {
+                    max-height: 700px;
+                    height: 700px;
+                    overflow-y: auto;
+                }
+
+                .platform_2 .video-summary .video-list .col-md-12, .platform_1 .video-summary .video-list .col-md-12 {
+                    /* = col-md-3 */
+                    width: 25%;
+                }
+            }
+
+            /* col-lg 1920*1080 */
+            @media (min-width: 1600px) {
+                .video-summary {
+                    max-height: 900px;
+                    height: 900px;
+                }
+
+                .platform_2 .video-summary .video-list .col-lg-12, .platform_1 .video-summary .video-list .col-lg-12 {
+                    /* = col-lg-2 */
+                    width: 16.66666667%;
+                }
+            }
+        </style>
+
+        <div class="row">
+
+            <div class="col-md-12">
+
+                <!--<div class="row">-->
+
+
+                <div class="panel panel-info">
+                    <div class="panel-heading" ms-visible="currentVideoInfo">
+                        <h4 ms-visible="currentVideoInfo.name_pyshow">
+                           <span ms-repeat="currentVideoInfo.name_pyshow" class="text-center py">
+                            {{el}}
+                            </span>
+                            <div class="clearfix"></div>
+                        </h4>
+                        <h3>
+                            <span ms-visible="nameList" ms-repeat="nameList" class="text-center py"
+                                  ms-class-1="non-py:true == currentVideoInfo.non_py">
+                            {{el}}
+                            </span>
+                        </h3>
+                        <h3>
+                            <span class="label label-default" ms-visible="currentVideoInfo.duration">{{currentVideoInfo.duration}}</span>
+                            <span class="label label-default" ms-visible="error != 'loading'">已下载 {{total}} / 共 {{setInfo.episode}} 集</span>
+                            <br>
+                            <a ms-if="currentVideoInfo.summary" href="javascript:;"
+                               class="btn btn-default btn-xs pull-right" ms-click="doggleSummary">
+                                <span class="glyphicon glyphicon-fullscreen"></span> 展开本集介绍
+                            </a>
+                            <div class="clearfix"></div>
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+
+
+                        <div class="clearfix"></div>
+                        <div class="bs-callout bs-callout-info" ms-if="summaryShow">
+
+                            {{currentVideoInfo.summary}}
+                        </div>
+
+                        <div ms-visible="total == 0 && error == false">
+                            <button class="btn btn-default btn-lg btn-block FocusPlay"
+                                    ms-visible="ondl == false && _clientInfo['platform'] != 0"
+                                    ms-click="dl(setInfo._id)"><span
+                                class="glyphicon glyphicon-download-alt"></span> 下载本影片集 (约{{setInfo.episode}}集)
+                            </button>
+                            <button disabled class="btn btn-lg btn-block"
+                                    ms-visible="ondl == false && _clientInfo['platform'] == 0"
+                                    style="color: #000000" title="请至后台进行下载操作"><span
+                                class="glyphicon glyphicon-download-alt"></span> 本设备不能下载影片
+                            </button>
+                        </div>
+
+
+                        <button disabled class="btn btn-lg btn-block" ms-visible="ondl"
+                                style="color: #000000"><span
+                            class="glyphicon glyphicon-dashboard"></span> 影片集下载中...
+                        </button>
+
+                        <!--<button class="btn btn-info btn-empty btn-block" tabindex="2"><span class="glyphicon glyphicon-star"></span> 已收藏</button>-->
+                        <!--<button class="btn btn-info btn-empty btn-block" tabindex="2"><span class="glyphicon glyphicon-star-empty"></span> 收藏本影片集</button>-->
+
+
+                        <div class="col-sm-12 col-xs-12 col-md-8 col-lg-9 col-s-6 player-main"
+                             ms-visible="error !== false">
+
+
+                            <div class="player">
+
+                                <video width="100%" id="playMain" controls playsinline></video>
+                            </div>
+                            <br>
+
+                            <!--<img ms-if="currentVideoInfo.img" ms-attr-src="set_bg(currentVideoInfo, setInfo.platform)" class="img-rounded  hidden-xs hidden-sm" style="max-width: 100%;">-->
+
+                        </div>
+
+                        <!--<div class="clearfix visible-sm-block visible-xs-block"></div>-->
+                        <!--<hr class="visible-sm-block visible-xs-block">-->
+                        <div class="col-sm-12 col-xs-12 col-md-4 col-lg-3 col-s-4 video-summary"
+                             ms-visible="error !== false">
+
+                            <div class="row">
+                                <!--<div class="row">-->
+
+
+                                <div class="row" ms-include-src="{{loading}}"
+                                     ms-visible="error == 'loading'"></div>
+
+                                <div class="col-md-12 video-list view-phone" ms-visible="error != 'loading'">
+                                    <br>
+                                    <div class="alert alert-info" role="alert"
+                                         ms-if="_clientInfo.platform == '1'">
+                                        视频播放时: [1] 上一集 / [2] 重新播放本集 / [3] 下一集 / [<span
+                                        class="glyphicon glyphicon-menu-up"></span>] 上一集 /
+                                        [<span class="glyphicon glyphicon-menu-down
+                                                                                                                                         "></span>]
+                                        下一集 / [OK] 暂停/播放/选集菜单/播放设置 / [<span
+                                        class="glyphicon glyphicon-menu-left"></span>]
+                                        快退 / [<span class="glyphicon glyphicon-menu-right"></span>] 快进
+                                    </div>
+
+
+                                    <div class="pagination-centered text-center"
+                                         ms-if="rePageHtml && error != 'loading'">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <button ms-click="rePage" type="button"
+                                                        class="btn btn-default btn-xs btn-block" tabindex="5">
+                                                    {{rePageHtml}}
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <br>
+                                    </div>
+                                    <div class="clearfix"></div>
+
+                                    <div class="text-center col-md-12 col-lg-12 col-sm-4 col-xs-6 col-s-12"
+                                         ms-repeat="videoList">
+                                        <a href="javascript:;" ms-click="play($index)" class="thumbnail"
+                                           ms-css-background-image="rand_bg(el, setInfo.platform)"
+                                           ms-attr-tabindex="$index" ms-attr-id="FocusMovie{{$index}}"
+                                           ms-class-1="FocusPlay:$index == 0">
+                                            <div class="caption">
+                                                <h4>
+                                                            <span
+                                                                class="label label-danger">{{getVideoNum($index)}}</span>
+                                                    {{el.name}}
+                                                </h4>
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                    <div class="clearfix"></div>
+                                    <div class="pagination-centered text-center"
+                                         ms-if="nextPageHtml && error != 'loading'">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <button ms-click="nextPage" type="button"
+                                                        class="btn btn-default btn-sm btn-block" tabindex="56">
+                                                    {{nextPageHtml}}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <br>
+
+                                    <div class="help-block text-center">
+                                        <span>{{currentPage}} / {{totalPage}} 页，总计: {{total}} 集</span>
+                                    </div>
+
+                                    <br><br>
+                                </div>
+                                <!--</div>-->
+                            </div>
+
+
+                        </div>
+                        <!--</div>-->
+
+                        <div class="row">
+                            <br>
+
+                            <div class="alert alert-danger" role="alert"
+                                 ms-visible="error === false && ondl === false">没有找到更多影片 或 还未下载至本设备中
+                            </div>
+                            <div class="alert alert-danger" role="alert"
+                                 ms-visible="error === false && ondl === true">影片还在下载中，请稍后查看
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="clearfix"></div>
+
+            <div class="col-md-12">
+
+                <div class="jumbotron">
+                    <h4 ms-if="setInfo.title_pyshow">
+                                <span ms-repeat="setInfo.title_pyshow" class="text-center pull-left py">
+                                    {{el}}
+                                </span>
+                        <div class="clearfix"></div>
+                    </h4>
+                    <h1 ms-if="setNameList">
+                                <span ms-repeat="setNameList" class="text-center pull-left py"
+                                      ms-class-1="non-py:true == setInfo.non_py">
+                                    {{el}}
+                                </span>
+                        <div class="clearfix"></div>
+                    </h1>
+                    <div class="clearfix"></div>
+                    <div class="summary-img">
+                        <img ms-attr-src="set_bg(setInfo, setInfo.platform)" alt="">
+                    </div>
+                    <p class="set-summary">
+                        <span>{{setInfo.platform | platform | html}}</span>
+                        <span>影片总数: {{setInfo.now_episode}}</span>
+                        <span>地区: {{setInfo.area}}</span>
+                        <span>语言: {{setInfo.lang}}</span>
+                        <span class="label label-success" ms-if="setInfo.episode_over == '1'">完结</span>
+                    </p>
+                    <p>{{setInfo.category}}</p>
+                    <p>{{setInfo.summary}}</p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+

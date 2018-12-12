@@ -9,32 +9,14 @@ var require = require || {
 
 // var _availableModules;
 if ('PRODUCTION' == APP_ENV) {
-    // _availableModules = {
-    //     //静态资源
-    //     'static': 'http://static.xwg.cc',
-    //     //后台
-    //     'straw' : 'http://straw.xwg.cc',
-    //     //内容服务
-    //     'content' : 'http://content.xwg.cc'
-    // }
 }
 
 if ('TEST' == APP_ENV) {
     require.urlArgs = 'v=' + (new Date()).getTime();
-    // _availableModules = {
-    //     'static': 'http://static3.xwg.cc',
-    //     'straw' : 'http://straw3.xwg.cc',
-    //     'content' : 'http://content3.xwg.cc'
-    // }
 }
 
 if ('DEVELOPMENT' == APP_ENV) {
     require.urlArgs = 'v=' + (new Date()).getTime();
-    // _availableModules = {
-    //     'static': 'http://static0.xwg.cc',
-    //     'straw' : 'http://straw0.xwg.cc',
-    //     'content' : 'http://content0.xwg.cc'
-    // }
 }
 
 
